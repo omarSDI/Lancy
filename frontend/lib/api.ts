@@ -7,7 +7,10 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getAccessToken } from './auth';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+if (API_URL && !API_URL.startsWith('http')) {
+  API_URL = `https://${API_URL}`;
+}
 
 const api = axios.create({
   baseURL: `${API_URL}/api/v1`,
