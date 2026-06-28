@@ -1,0 +1,1 @@
+"""Lansy.ai Backend Application"""
