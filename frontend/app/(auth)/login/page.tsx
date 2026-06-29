@@ -1,5 +1,5 @@
 /**
- * Lansy.ai ÔÇö Login Page
+ * Lansy.ai — Login Page
  */
 
 'use client';
@@ -38,7 +38,7 @@ export default function LoginPage() {
           full_name: user.user_metadata?.full_name,
           avatar_url: user.user_metadata?.avatar_url,
         });
-        toast.success('Connexion r├®ussie !');
+        toast.success('Connexion réussie !');
         router.push('/dashboard');
       }
     } catch (err: any) {
@@ -121,7 +121,7 @@ export default function LoginPage() {
                 type={showPassword ? 'text' : 'password'}
                 className="input"
                 style={{ paddingLeft: 38, paddingRight: 38 }}
-                placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -148,7 +148,7 @@ export default function LoginPage() {
         <p style={{ textAlign: 'center', marginTop: 24, fontSize: 14, color: 'var(--text-secondary)' }}>
           Pas encore de compte ?{' '}
           <Link href="/register" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
-            Cr├®er un compte
+            Créer un compte
           </Link>
         </p>
       </div>

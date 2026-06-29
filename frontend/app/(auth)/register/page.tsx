@@ -1,5 +1,5 @@
 /**
- * Lansy.ai ÔÇö Register Page
+ * Lansy.ai — Register Page
  */
 
 'use client';
@@ -30,7 +30,7 @@ export default function RegisterPage() {
       return;
     }
     if (password.length < 6) {
-      toast.error('Le mot de passe doit contenir au moins 6 caract├¿res.');
+      toast.error('Le mot de passe doit contenir au moins 6 caractères.');
       return;
     }
     if (password !== confirmPassword) {
@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      // Call our backend (uses Supabase Admin API ÔÇö no SMTP/email confirmation needed)
+      // Call our backend (uses Supabase Admin API — no SMTP/email confirmation needed)
       const { data } = await api.post<{
         access_token: string;
         refresh_token: string;
@@ -59,11 +59,11 @@ export default function RegisterPage() {
         refresh_token: data.refresh_token,
       });
 
-      toast.success('Compte cr├®├® ! ­ƒÄë 3 tokens offerts.');
+      toast.success('Compte créé ! 🎉 3 tokens offerts.');
       router.push('/dashboard');
     } catch (err: any) {
       const detail = err?.response?.data?.detail;
-      toast.error(detail || "Erreur lors de l'inscription. Veuillez r├®essayer.");
+      toast.error(detail || "Erreur lors de l'inscription. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -91,11 +91,11 @@ export default function RegisterPage() {
             </span>
           </Link>
           <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 8 }}>
-            Cr├®ez votre compte gratuitement
+            Créez votre compte gratuitement
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: 'var(--radius-full)', padding: '6px 14px', marginTop: 12, fontSize: 13, color: 'var(--accent)', fontWeight: 500 }}>
             <Gift size={14} />
-            3 tokens offerts ├á l&apos;inscription
+            3 tokens offerts à l&apos;inscription
           </div>
         </div>
 
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                 type={showPassword ? 'text' : 'password'}
                 className="input"
                 style={{ paddingLeft: 38, paddingRight: 38 }}
-                placeholder="Minimum 6 caract├¿res"
+                placeholder="Minimum 6 caractères"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -183,7 +183,7 @@ export default function RegisterPage() {
                 type="password"
                 className="input"
                 style={{ paddingLeft: 38 }}
-                placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó"
+                placeholder="••••••••"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -196,12 +196,12 @@ export default function RegisterPage() {
             style={{ width: '100%' }}
             disabled={loading}
           >
-            {loading ? 'Cr├®ation...' : "Cr├®er mon compte"}
+            {loading ? 'Création...' : "Créer mon compte"}
           </button>
         </form>
 
         <p style={{ textAlign: 'center', marginTop: 24, fontSize: 14, color: 'var(--text-secondary)' }}>
-          D├®j├á un compte ?{' '}
+          Déjà un compte ?{' '}
           <Link href="/login" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
             Se connecter
           </Link>
