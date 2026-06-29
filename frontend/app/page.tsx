@@ -7,6 +7,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Sparkles, FileText, BarChart3, Zap, Globe, Shield,
   ChevronRight, Star, Users, CheckCircle, ArrowRight,
@@ -96,8 +97,8 @@ export default function LandingPage() {
         className="glass"
       >
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-            <Sparkles size={28} color="var(--primary)" />
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <Image src="/logo.png" alt="Lansy.ai Logo" width={32} height={32} style={{ borderRadius: 8 }} />
             <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)' }}>
               Lansy<span style={{ color: 'var(--primary)' }}>.ai</span>
             </span>
@@ -324,8 +325,8 @@ export default function LandingPage() {
       {/* --- Footer --- */}
       <footer style={{ padding: '40px 24px', background: '#0F172A', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Sparkles size={20} color="var(--primary)" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Image src="/logo.png" alt="Lansy.ai Logo" width={24} height={24} style={{ borderRadius: 6 }} />
             <span style={{ color: 'white', fontWeight: 700 }}>Lansy<span style={{ color: 'var(--primary)' }}>.ai</span></span>
           </div>
           <div style={{ display: 'flex', gap: 24 }}>

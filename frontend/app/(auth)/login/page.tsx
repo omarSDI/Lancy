@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { Sparkles, Mail, Lock, Eye, EyeOff } from 'lucide-react';
@@ -64,8 +65,8 @@ export default function LoginPage() {
       <div className="animate-scale-in glass" style={{ width: '100%', maxWidth: 440, borderRadius: 'var(--radius-xl)', padding: 40 }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', marginBottom: 8 }}>
-            <Sparkles size={28} color="var(--primary)" />
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none', marginBottom: 8 }}>
+            <Image src="/logo.png" alt="Lansy.ai Logo" width={32} height={32} style={{ borderRadius: 8 }} />
             <span style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)' }}>
               Lansy<span style={{ color: 'var(--primary)' }}>.ai</span>
             </span>

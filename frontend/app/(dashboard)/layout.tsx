@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Sparkles, LayoutDashboard, FileText, History,
   Coins, UserCircle, LogOut, Menu, X, ChevronRight
@@ -126,8 +127,8 @@ export default function DashboardLayout({
       >
         {/* Logo */}
         <div style={{ padding: '0 20px', marginBottom: 32 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-            <Sparkles size={24} color="#7CB9E8" />
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <Image src="/logo.png" alt="Lansy.ai Logo" width={28} height={28} style={{ borderRadius: 6 }} />
             <span style={{ fontSize: 20, fontWeight: 800, color: 'white' }}>
               Lansy<span style={{ color: '#7CB9E8' }}>.ai</span>
             </span>
