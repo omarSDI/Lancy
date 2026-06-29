@@ -23,7 +23,11 @@ export default function InteractiveCVEditor({ sessionId, onClose }: Props) {
     const fetchHtml = async () => {
       try {
         const token = await getAccessToken();
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/cv/${sessionId}/html`, {
+        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        if (apiUrl && !apiUrl.startsWith('http')) {
+          apiUrl = `https://${apiUrl}`;
+        }
+        const res = await fetch(`${apiUrl}/api/v1/cv/${sessionId}/html`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error('Échec du chargement du CV');
