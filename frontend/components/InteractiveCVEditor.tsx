@@ -300,7 +300,11 @@ export default function InteractiveCVEditor({ sessionId, onClose }: Props) {
     const toastId = toast.loading('Génération du PDF final...');
     try {
       const token = await getAccessToken();
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/cv/${sessionId}/custom-pdf`, {
+      let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      if (apiUrl && !apiUrl.startsWith('http')) {
+        apiUrl = `https://${apiUrl}`;
+      }
+      const res = await fetch(`${apiUrl}/api/v1/cv/${sessionId}/custom-pdf`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
