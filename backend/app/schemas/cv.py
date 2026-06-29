@@ -15,7 +15,7 @@ class OfferAnalysisRequest(BaseModel):
     """Request to analyze a job offer."""
     offer_text: str = Field(
         ...,
-        min_length=50,
+        min_length=10,
         max_length=10000,
         description="Raw job offer text pasted by the user",
     )
@@ -39,7 +39,7 @@ class CVGenerateRequest(BaseModel):
     """Request to generate a tailored CV."""
     offer_text: str = Field(
         ...,
-        min_length=50,
+        min_length=10,
         max_length=10000,
         description="Raw job offer text",
     )
