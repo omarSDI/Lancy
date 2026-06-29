@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   Sparkles, FileText, BarChart3, Zap, Globe, Shield,
   ChevronRight, Star, Users, CheckCircle, ArrowRight,
@@ -104,6 +105,7 @@ export default function LandingPage() {
             </span>
           </Link>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <ThemeToggle />
             <Link href="/login" className="btn btn-ghost" style={{ textDecoration: 'none' }}>
               Connexion
             </Link>

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import {
   Sparkles, LayoutDashboard, FileText, History,
   Coins, UserCircle, LogOut, Menu, X, ChevronRight
@@ -225,6 +226,7 @@ export default function DashboardLayout({
           <div />
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <ThemeToggle />
             {/* Token balance */}
             <Link href="/tokens" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--primary-50)', padding: '6px 14px', borderRadius: 'var(--radius-full)', textDecoration: 'none', transition: 'all 0.2s ease' }}>
               <Coins size={16} color="var(--primary)" />

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -31,27 +32,30 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>
-        {children}
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              borderRadius: '8px',
-              background: '#0F172A',
-              color: '#fff',
-              fontSize: '14px',
-              padding: '12px 16px',
-            },
-            success: {
-              iconTheme: { primary: '#10B981', secondary: '#fff' },
-            },
-            error: {
-              iconTheme: { primary: '#EF4444', secondary: '#fff' },
-            },
-          }}
-        />
+      <body className="antialiased">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                borderRadius: '8px',
+                background: 'var(--bg-card)',
+                color: 'var(--text-primary)',
+                fontSize: '14px',
+                padding: '12px 16px',
+                border: '1px solid var(--border)',
+              },
+              success: {
+                iconTheme: { primary: 'var(--success)', secondary: '#fff' },
+              },
+              error: {
+                iconTheme: { primary: 'var(--error)', secondary: '#fff' },
+              },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );
