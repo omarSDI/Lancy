@@ -13,9 +13,14 @@ from sqlalchemy.orm import DeclarativeBase
 from app.config import settings
 
 
+# Force asyncpg driver if user provided a standard postgresql URL
+db_url = settings.database_url
+if db_url.startswith("postgresql://"):
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
 # Create async engine
 engine = create_async_engine(
-    settings.database_url,
+    db_url,
     echo=settings.debug,
     pool_size=20,
     max_overflow=10,
