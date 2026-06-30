@@ -73,12 +73,17 @@ export function useCVGenerator() {
       });
 
       toast.success(`CV généré avec succès ! Score ATS : ${result.ats_score}/100`);
-    } catch {
+    } catch (err: any) {
       clearInterval(progressInterval);
       // Restore the token that was optimistically deducted
       optimisticDeduct(-1);
       store.setGenerationStatus('idle');
-      setError("Erreur lors de la génération du CV. Veuillez réessayer.");
+      const detail =
+        err?.response?.data?.detail ||
+        err?.message ||
+        'Erreur lors de la génération du CV. Veuillez réessayer.';
+      console.error('[useCVGenerator] Generation failed:', err?.response?.data || err);
+      setError(detail);
     }
   }, [store, optimisticDeduct, setBalance]);
 

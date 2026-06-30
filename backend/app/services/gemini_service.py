@@ -110,7 +110,7 @@ def _get_model():
             temperature=0.7,
             top_p=0.95,
             top_k=40,
-            max_output_tokens=4096,
+            max_output_tokens=8192,
             response_mime_type="application/json",
         ),
     )
@@ -212,54 +212,65 @@ async def generate_cv(
     Generate a tailored CV using Gemini based on user profile,
     offer analysis, and RAG context.
     Returns structured CV data as a dict.
+    Retries up to 3 times on failure.
     """
-    try:
-        model = _get_model()
+    max_attempts = 3
+    last_error = None
 
-        lang_name = LANGUAGE_MAP.get(language, "français")
-        ats_keywords = ", ".join(offer_analysis.get("ats_keywords", []))
-        sector = offer_analysis.get("sector", "Général")
+    for attempt in range(1, max_attempts + 1):
+        try:
+            model = _get_model()
 
-        prompt = CV_GENERATION_PROMPT.format(
-            language=lang_name,
-            user_profile=json.dumps(user_profile, ensure_ascii=False, indent=2),
-            offer_analysis=json.dumps(offer_analysis, ensure_ascii=False, indent=2),
-            rag_context=rag_context,
-            ats_keywords=ats_keywords,
-            sector=sector,
-        )
+            lang_name = LANGUAGE_MAP.get(language, "français")
+            ats_keywords = ", ".join(offer_analysis.get("ats_keywords", []))
+            sector = offer_analysis.get("sector", "Général")
 
-        # Run sync SDK in a thread to avoid blocking the event loop
-        response = await asyncio.to_thread(model.generate_content, prompt)
+            prompt = CV_GENERATION_PROMPT.format(
+                language=lang_name,
+                user_profile=json.dumps(user_profile, ensure_ascii=False, indent=2),
+                offer_analysis=json.dumps(offer_analysis, ensure_ascii=False, indent=2),
+                rag_context=rag_context,
+                ats_keywords=ats_keywords,
+                sector=sector,
+            )
 
-        if not response.text:
-            raise ValueError("Réponse vide de Gemini")
+            # Run sync SDK in a thread to avoid blocking the event loop
+            response = await asyncio.to_thread(model.generate_content, prompt)
 
-        result = _parse_json_response(response.text)
+            if not response.text:
+                raise ValueError("Réponse vide de Gemini")
 
-        # Validate required fields with defaults
-        defaults = {
-            "professional_summary": "",
-            "experience": [],
-            "education": [],
-            "technical_skills": [],
-            "soft_skills": [],
-            "languages": [],
-            "certifications": [],
-        }
-        for key, default in defaults.items():
-            if key not in result:
-                result[key] = default
+            result = _parse_json_response(response.text)
 
-        logger.info("CV generated successfully")
-        return result
+            # Validate required fields with defaults
+            defaults = {
+                "professional_summary": "",
+                "experience": [],
+                "education": [],
+                "technical_skills": [],
+                "soft_skills": [],
+                "languages": [],
+                "certifications": [],
+            }
+            for key, default in defaults.items():
+                if key not in result:
+                    result[key] = default
 
-    except Exception as e:
-        logger.error(f"Gemini CV generation failed: {e}")
-        raise ValueError(
-            f"Erreur lors de la génération du CV. "
-            f"Veuillez réessayer. Détails: {str(e)}"
-        )
+            logger.info(f"CV generated successfully (attempt {attempt})")
+            return result
+
+        except Exception as e:
+            last_error = e
+            logger.warning(f"Gemini CV generation attempt {attempt}/{max_attempts} failed: {e}")
+            if attempt < max_attempts:
+                await asyncio.sleep(2 * attempt)  # 2s, 4s backoff
+            continue
+
+    logger.error(f"Gemini CV generation failed after {max_attempts} attempts: {last_error}")
+    raise ValueError(
+        f"Erreur lors de la génération du CV après {max_attempts} tentatives. "
+        f"Veuillez réessayer. Détails: {str(last_error)}"
+    )
 
 
 def cv_to_text(cv_data: dict) -> str:
